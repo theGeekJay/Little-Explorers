@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Explorers Reggio Emilia Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --clay: #C4622D;
+    --sage: #5C7A4E;
+    --sand: #F2E8D5;
+    --cream: #FBF7F0;
+    --bark: #3B2F1E;
+    --sky: #7EAAC7;
+    --terracotta: #D4845A;
+    --leaf: #8DB07D;
+    --gold: #D4A843;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--bark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(251,247,240,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(196,98,45,0.15);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    color: var(--clay);
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--bark);
+    font-size: 0.875rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--clay); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--bark);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 64px;
+  }
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .circle {
+    position: absolute; border-radius: 50%;
+    opacity: 0.12;
+  }
+  .c1 { width: 600px; height: 600px; background: var(--clay); top: -100px; right: -150px; }
+  .c2 { width: 350px; height: 350px; background: var(--gold); bottom: 50px; left: -80px; }
+  .c3 { width: 200px; height: 200px; background: var(--sage); top: 200px; left: 40%; opacity: 0.08; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 5rem 2.5rem 5rem 8%;
+    max-width: 700px;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(196,98,45,0.25);
+    color: var(--terracotta);
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    color: var(--sand);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { color: var(--terracotta); font-style: italic; }
+  .hero p {
+    color: rgba(242,232,213,0.75);
+    font-size: 1.1rem; line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--clay); color: white;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.9rem; transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--terracotta); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid rgba(242,232,213,0.35); color: var(--sand);
+    padding: 0.85rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 400;
+    font-size: 0.9rem; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--sand); }
+
+  .hero-info {
+    position: absolute; bottom: 3rem; right: 8%;
+    display: flex; gap: 3rem;
+  }
+  .info-item { color: rgba(242,232,213,0.6); font-size: 0.8rem; text-align: right; }
+  .info-item strong { display: block; color: var(--sand); font-size: 0.95rem; margin-bottom: 0.2rem; }
+
+  /* SECTION BASE */
+  section { padding: 6rem 5%; }
+  .section-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em; line-height: 1.15;
+    color: var(--bark);
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--sand);
+    padding: 5rem 5%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-strip .text p { color: #5a4a38; line-height: 1.8; margin-top: 1.25rem; font-size: 0.95rem; }
+  .about-strip .text p + p { margin-top: 1rem; }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .stat-card {
+    background: white; border-radius: 16px;
+    padding: 1.5rem; text-align: center;
+    border: 1px solid rgba(196,98,45,0.1);
+  }
+  .stat-card .num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem; color: var(--clay);
+    letter-spacing: -0.03em; display: block;
+  }
+  .stat-card .lbl { font-size: 0.8rem; color: #7a6a58; }
+
+  /* PHILOSOPHY */
+  .philosophy { background: var(--cream); }
+  .phil-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .phil-card {
+    background: white; border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(59,47,30,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .phil-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,47,30,0.08); }
+  .phil-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.25rem;
+  }
+  .phil-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem; margin-bottom: 0.75rem;
+    color: var(--bark);
+  }
+  .phil-card p { font-size: 0.875rem; color: #6a5a48; line-height: 1.7; }
+
+  /* CLASSROOMS */
+  .classrooms { background: var(--bark); }
+  .classrooms h2 { color: var(--sand); }
+  .classrooms .section-label { color: var(--terracotta); }
+  .classrooms > p { color: rgba(242,232,213,0.65); margin-top: 0.75rem; font-size: 0.95rem; max-width: 560px; }
+
+  .room-tabs {
+    display: flex; gap: 0.5rem;
+    margin: 2.5rem 0 2rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 0.6rem 1.4rem; border-radius: 100px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(242,232,213,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--clay); border-color: var(--clay);
+    color: white;
+  }
+
+  .room-panel { display: none; }
+  .room-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .room-detail {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2rem;
+  }
+  .room-detail h3 {
+    font-family: 'Fraunces', serif;
+    color: var(--gold); font-size: 1.1rem; margin-bottom: 1rem;
+  }
+  .room-detail ul { list-style: none; }
+  .room-detail ul li {
+    color: rgba(242,232,213,0.7);
+    font-size: 0.875rem; line-height: 1.6;
+    padding: 0.4rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .room-detail ul li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--terracotta);
+  }
+
+  /* VOLUNTEER */
+  .volunteer { background: var(--sand); }
+  .vol-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .vol-card {
+    background: white; border-radius: 20px; padding: 2rem;
+    border-left: 4px solid var(--clay);
+  }
+  .vol-card h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--clay); margin-bottom: 1rem; }
+  .vol-card ul { list-style: none; }
+  .vol-card li { font-size: 0.875rem; color: #5a4a38; padding: 0.35rem 0; border-bottom: 1px solid #f0e8d8; }
+  .vol-card li:last-child { border-bottom: none; }
+
+  /* HOME ACTIVITIES */
+  .home-activities { background: var(--cream); }
+  .act-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .act-card {
+    border-radius: 20px; padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .act-card.infants { background: #EEF5F9; }
+  .act-card.toddlers { background: #F0F5EE; }
+  .act-card.preschool { background: #FBF1E6; }
+  .act-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem; margin-bottom: 1rem; color: var(--bark);
+  }
+  .act-card .age-tag {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+    display: block;
+  }
+  .act-card.infants .age-tag { color: var(--sky); }
+  .act-card.toddlers .age-tag { color: var(--sage); }
+  .act-card.preschool .age-tag { color: var(--clay); }
+  .act-card p { font-size: 0.875rem; color: #5a4a38; line-height: 1.7; }
+
+  /* REFLECTION */
+  .reflection { background: var(--sage); }
+  .reflection h2 { color: var(--sand); }
+  .reflection .section-label { color: var(--leaf); }
+  .ref-content {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 3rem;
+  }
+  .ref-block {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 1.75rem;
+  }
+  .ref-block h3 {
+    font-family: 'Fraunces', serif;
+    color: var(--sand); font-size: 1.05rem; margin-bottom: 0.75rem;
+  }
+  .ref-block p { color: rgba(242,232,213,0.8); font-size: 0.875rem; line-height: 1.75; }
+
+  /* CONTACT */
+  .contact { background: var(--sand); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; margin-top: 3rem; align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Fraunces', serif; font-size: 1.5rem;
+    margin-bottom: 1.5rem; color: var(--bark);
+  }
+  .contact-row {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .contact-row .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--clay); display: flex; align-items: center;
+    justify-content: center; color: white; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .contact-row .detail { font-size: 0.9rem; color: #5a4a38; line-height: 1.5; }
+  .contact-row .detail strong { display: block; color: var(--bark); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+
+  .contact-form { background: white; border-radius: 20px; padding: 2rem; }
+  .contact-form h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; margin-bottom: 1.5rem; }
+  .form-row { margin-bottom: 1rem; }
+  .form-row label { display: block; font-size: 0.8rem; font-weight: 500; color: #5a4a38; margin-bottom: 0.4rem; }
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%; padding: 0.75rem 1rem;
+    border: 1px solid rgba(59,47,30,0.15);
+    border-radius: 10px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; background: var(--cream);
+    color: var(--bark); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+    border-color: var(--clay);
+  }
+  .form-row textarea { height: 100px; resize: vertical; }
+  .form-submit {
+    background: var(--clay); color: white; border: none;
+    width: 100%; padding: 0.9rem; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    font-weight: 500; cursor: pointer; transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--terracotta); }
+
+  /* REFERENCES */
+  .references { background: var(--cream); padding: 4rem 5%; }
+  .references h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 1.5rem; }
+  .references ol { padding-left: 1.5rem; }
+  .references li { font-size: 0.85rem; color: #6a5a48; line-height: 1.7; margin-bottom: 0.75rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bark); color: rgba(242,232,213,0.5);
+    text-align: center; padding: 2rem;
+    font-size: 0.8rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp 0.7s both; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero p { animation-delay: 0.4s; }
+  .hero-cta { animation-delay: 0.55s; }
+
+  @media (max-width: 768px) {
+    .about-strip, .ref-content, .contact-grid { grid-template-columns: 1fr; }
+    .phil-grid, .vol-grid, .act-grid { grid-template-columns: 1fr; }
+    .room-panel.active { grid-template-columns: 1fr; }
+    .hero-info { display: none; }
+    .hero-content { padding: 3rem 1.5rem; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🌿 Little Explorers</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classrooms">Classrooms</a></li>
+    <li><a href="#families">Families</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circles">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-tag">Reggio Emilia Approach</span>
+    <h1>Little <em>Explorers</em> Early Learning Center</h1>
+    <p>Where curiosity grows, creativity blooms, and every child is seen as a capable, curious, and inventive learner. Rooted in the Reggio Emilia philosophy, we nurture the whole child.</p>
+    <div class="hero-cta">
+      <a href="#classrooms" class="btn-primary">Explore Our Classrooms</a>
+      <a href="#contact" class="btn-ghost">Schedule a Tour</a>
+    </div>
+  </div>
+  <div class="hero-info">
+    <div class="info-item">
+      <strong>Mon – Fri</strong>
+      7:00 AM – 6:00 PM
+    </div>
+    <div class="info-item">
+      <strong>Ages</strong>
+      Infants to 4 Years
+    </div>
+    <div class="info-item">
+      <strong>📍 Address</strong>
+      428 Maple Grove Ave<br>Springfield, IL 62701
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / HISTORY -->
+<section class="about-strip" id="about">
+  <div class="text">
+    <p class="section-label">History & Philosophy</p>
+    <h2>Born from Resilience,<br>Guided by Wonder</h2>
+    <p>The Reggio Emilia approach originated in Northern Italy after World War II. Loris Malaguzzi, an educator and visionary, partnered with families in the town of Reggio Emilia who wanted to rebuild their community — starting with their children. Together, they built schools grounded in respect, collaboration, and the belief that children are naturally curious and capable learners.</p>
+    <p>At Little Explorers, we carry that spirit forward. We believe children communicate through what Malaguzzi called the "Hundred Languages" — drawing, building, dramatic play, movement, and more. Our role as educators is to listen, document, and respond to each child's unique ways of making meaning.</p>
+    <p>Our theoretical foundation draws from constructivist theorists like Jean Piaget (children build knowledge through experience), Lev Vygotsky (learning is social and language-rich), and John Dewey (learning by doing). These principles shape everything we do.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="num">30+</span>
+      <span class="lbl">Years of Reggio Research</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">3</span>
+      <span class="lbl">Learning Environments</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">100</span>
+      <span class="lbl">Languages of Children</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">1:4</span>
+      <span class="lbl">Staff-to-Child Ratio</span>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY PILLARS -->
+<section class="philosophy">
+  <p class="section-label">Core Principles</p>
+  <h2>How We Support the Whole Child</h2>
+  <div class="phil-grid">
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#FEF0E6;">🧠</div>
+      <h3>Cognitive Development</h3>
+      <p>Children direct their own inquiry through project-based exploration. Teachers act as co-researchers, asking open-ended questions that spark critical thinking and problem solving.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#EEF5EE;">❤️</div>
+      <h3>Social & Emotional Growth</h3>
+      <p>Collaboration, conflict resolution, and community are woven into daily life. Children learn empathy and self-regulation through relationship-centered interactions.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#EEF3F8;">🎨</div>
+      <h3>Creative Expression</h3>
+      <p>Art studios (ateliers) and loose-parts materials allow children to represent their ideas through drawing, sculpting, music, storytelling, and movement.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#FBF3E6;">🌱</div>
+      <h3>Language & Literacy</h3>
+      <p>Rich conversations, documentation panels, and storytelling develop oral and early written language skills in an immersive, natural context.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#F5EEF5;">🏃</div>
+      <h3>Physical Development</h3>
+      <p>Daily outdoor exploration, sensory play, and open-ended physical challenges develop gross and fine motor skills in meaningful, joyful ways.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon" style="background:#EEF5F9;">🌍</div>
+      <h3>Cultural Identity</h3>
+      <p>We honor every family's background. Children see their cultures reflected in materials, stories, food, and the people around them — building positive identity and belonging.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSROOMS -->
+<section class="classrooms" id="classrooms">
+  <p class="section-label">Learning Environments</p>
+  <h2>Three Beautiful Spaces for Growing</h2>
+  <p>Each classroom is thoughtfully designed as a "third teacher" — organized with intention, natural light, and materials that invite exploration at every developmental stage.</p>
+
+  <div class="room-tabs">
+    <button class="tab-btn active" onclick="showRoom('infant')">🍼 Infant Room (0–12 mo)</button>
+    <button class="tab-btn" onclick="showRoom('toddler')">🧸 Toddler Room (1–2 yrs)</button>
+    <button class="tab-btn" onclick="showRoom('preschool')">🎨 Preschool Room (3–4 yrs)</button>
+  </div>
+
+  <!-- INFANT -->
+  <div class="room-panel active" id="room-infant">
+    <div class="room-detail">
+      <h3>📚 Curriculum & Theory</h3>
+      <ul>
+        <li>Curriculum centers on sensory exploration aligned with Piaget's sensorimotor stage</li>
+        <li>Infants explore light tables, soft textured objects, mirrors, and nature materials</li>
+        <li>Vygotsky's ideas guide our warm, language-rich caregiving interactions</li>
+        <li>Attachment theory (Bowlby) shapes our consistent, responsive routines</li>
+        <li>Documentation through photo portfolios tracks individual growth</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🛋️ Materials & Environment</h3>
+      <ul>
+        <li>Low shelves with natural wooden rattles, fabric swatches, and soft blocks</li>
+        <li>Cozy reading nook with board books in multiple languages</li>
+        <li>Light table for shadow and color exploration</li>
+        <li>Foam-padded floor for safe tummy time and early movement</li>
+        <li>Rocking chairs for caregivers and feeding areas</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>👨‍👩‍👦 Volunteer Opportunities</h3>
+      <ul>
+        <li>Reading aloud during morning quiet time</li>
+        <li>Helping prepare sensory bins and natural material baskets</li>
+        <li>Sharing songs or lullabies in your home language</li>
+        <li>Assisting with documentation photography</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🏠 At-Home Activities</h3>
+      <ul>
+        <li>Create a sensory basket with safe household textures (silk, cotton, wood)</li>
+        <li>Hold your baby near a mirror and narrate what you see</li>
+        <li>Narrate your daily routines — bath, meals, walks — using rich language</li>
+        <li>Play peek-a-boo and call-and-response games to build early communication</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TODDLER -->
+  <div class="room-panel" id="room-toddler">
+    <div class="room-detail">
+      <h3>📚 Curriculum & Theory</h3>
+      <ul>
+        <li>Project-based learning follows toddler interests (e.g., "the garden," "ramps and balls")</li>
+        <li>Aligned with Piaget's preoperational stage — symbolic and pretend play is central</li>
+        <li>Erikson's Autonomy vs. Shame guides our emphasis on independence and choice</li>
+        <li>Vygotsky's Zone of Proximal Development shapes scaffolded teacher support</li>
+        <li>Art experiences are process-focused — no pre-made templates</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🛋️ Materials & Environment</h3>
+      <ul>
+        <li>Dramatic play corner with open-ended props (scarves, shells, baskets)</li>
+        <li>Building area with wooden unit blocks and loose natural materials</li>
+        <li>Art atelier with clay, paint, collage, and printing materials</li>
+        <li>Child-height documentation panels displaying ongoing projects</li>
+        <li>Cozy book nook and outdoor garden access</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>👨‍👩‍👦 Volunteer Opportunities</h3>
+      <ul>
+        <li>Sharing your job, hobby, or cultural tradition with the class</li>
+        <li>Cooking a simple recipe with the group</li>
+        <li>Assisting in the art atelier during project work</li>
+        <li>Helping in the outdoor garden — planting, watering, observing</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🏠 At-Home Activities</h3>
+      <ul>
+        <li>Create a "treasure basket" with natural objects for sorting and exploring</li>
+        <li>Build and knock down towers — discuss what happens and why</li>
+        <li>Encourage dramatic play: set up a simple store or restaurant together</li>
+        <li>Go on a nature walk and collect leaves, rocks, and sticks to sort</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRESCHOOL -->
+  <div class="room-panel" id="room-preschool">
+    <div class="room-detail">
+      <h3>📚 Curriculum & Theory</h3>
+      <ul>
+        <li>Long-term projects driven by children's questions (e.g., "How does rain work?")</li>
+        <li>Aligned with Vygotsky's social learning — small group collaborations thrive</li>
+        <li>Gardner's Multiple Intelligences shapes how we honor diverse learner strengths</li>
+        <li>Early numeracy, literacy, and science emerge through authentic project work</li>
+        <li>Teacher documentation informs curriculum and communicates to families</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🛋️ Materials & Environment</h3>
+      <ul>
+        <li>Full art studio with easels, light tables, clay, wire, and recycled materials</li>
+        <li>Library corner with fiction, non-fiction, and bilingual books</li>
+        <li>Science inquiry station with magnifying glasses, journals, and specimens</li>
+        <li>Block area with blueprints and photos of real-world architecture</li>
+        <li>Digital documentation station — child-accessible cameras and tablet</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>👨‍👩‍👦 Volunteer Opportunities</h3>
+      <ul>
+        <li>Presenting your career or passion as a "community expert"</li>
+        <li>Co-facilitating a class presentation or project exhibition</li>
+        <li>Leading an adult learning workshop for other parents</li>
+        <li>Translating documentation panels into home languages</li>
+      </ul>
+    </div>
+    <div class="room-detail">
+      <h3>🏠 At-Home Activities</h3>
+      <ul>
+        <li>Start a "wonder journal" — draw and write questions about the world</li>
+        <li>Investigate a topic together: visit the library, search, and discuss</li>
+        <li>Cook a recipe together, discussing measuring, ingredients, and changes</li>
+        <li>Create a map of your home or neighborhood and explore geography</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section class="volunteer" id="families">
+  <p class="section-label">Family Engagement</p>
+  <h2>Your Presence Makes a Difference</h2>
+  <p style="margin-top:0.75rem; color:#5a4a38; max-width:540px; line-height:1.7; font-size:0.95rem;">Families are our most important partners. Every classroom has meaningful ways for you to be involved — no experience required.</p>
+  <div class="vol-grid">
+    <div class="vol-card">
+      <h3>🍼 Infant Room</h3>
+      <ul>
+        <li>Reading to infants during quiet time</li>
+        <li>Preparing sensory material baskets</li>
+        <li>Sharing lullabies in your home language</li>
+        <li>Photo documentation helpers</li>
+        <li>Garden or outdoor setup volunteers</li>
+      </ul>
+    </div>
+    <div class="vol-card">
+      <h3>🧸 Toddler Room (1–2 yrs)</h3>
+      <ul>
+        <li>Community expert presentations</li>
+        <li>Cooking simple recipes with the group</li>
+        <li>Art atelier assistance</li>
+        <li>Outdoor garden activities</li>
+        <li>Story time in any language</li>
+      </ul>
+    </div>
+    <div class="vol-card">
+      <h3>🎨 Preschool Room (3–4 yrs)</h3>
+      <ul>
+        <li>Career or passion presentations</li>
+        <li>Co-facilitating project exhibitions</li>
+        <li>Adult learning workshops</li>
+        <li>Documentation panel translation</li>
+        <li>Field trip chaperones</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOME ACTIVITIES -->
+<section class="home-activities">
+  <p class="section-label">Learning at Home</p>
+  <h2>Carry the Learning Home</h2>
+  <p style="margin-top:0.75rem; color:#5a4a38; max-width:560px; line-height:1.7; font-size:0.95rem;">The Reggio approach sees the home as a rich learning environment. Here are simple, joyful activities for every age group.</p>
+  <div class="act-grid">
+    <div class="act-card infants">
+      <span class="age-tag">Infants · 0–12 Months</span>
+      <h3>Sensory Exploration at Home</h3>
+      <p>Gather a small basket with safe items of different textures — a smooth stone, a silky cloth, a wooden spoon. Sit together and let your baby touch and explore while you describe each object: "That's smooth! That's soft." Narrate your day — bath time, feeding, a walk — to build language from the very beginning. Simple interactions like peek-a-boo and singing build attachment and cognitive connections.</p>
+    </div>
+    <div class="act-card toddlers">
+      <span class="age-tag">Toddlers · 1–2 Years</span>
+      <h3>Nature Baskets & Building Play</h3>
+      <p>Go on a neighborhood nature walk and collect leaves, rocks, pinecones, and sticks. Back home, invite your toddler to sort, arrange, and build with them. Ask open-ended questions: "What do you notice? Where does this one go?" Set up a small water or sand table outside for sensory exploration. These activities build early math thinking, language, and a sense of wonder.</p>
+    </div>
+    <div class="act-card preschool">
+      <span class="age-tag">Preschool · 3–4 Years</span>
+      <h3>Wonder Journals & Family Projects</h3>
+      <p>Start a "Wonder Journal" — a blank notebook where your child draws and you write down questions they ask: "Why is the sky blue? Where do worms go when it rains?" Choose one question to investigate together each week. Cook a simple recipe, build a birdhouse, or interview a grandparent. These projects build literacy, science thinking, and the love of lifelong learning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section class="reflection">
+  <p class="section-label">Director's Reflection</p>
+  <h2 style="color:var(--sand);">Reaching Every Family</h2>
+  <p style="color:rgba(242,232,213,0.7); margin-top:0.75rem; font-size:0.95rem; max-width:580px; line-height:1.7;">Our commitment to inclusion doesn't end at our front door. Here's how we reach families wherever they are.</p>
+  <div class="ref-content">
+    <div class="ref-block">
+      <h3>📬 Families Without Internet</h3>
+      <p>Not all families have reliable internet access, and we take that seriously. We distribute printed monthly newsletters, welcome packets, and classroom documentation panels in physical form. Community partners — local libraries, pediatric offices, grocery stores, and laundromats — display our informational flyers. We also hold monthly in-person family meetings with food and childcare provided, ensuring no family is left out due to the digital divide.</p>
+    </div>
+    <div class="ref-block">
+      <h3>📣 Advertising the Website</h3>
+      <p>We promote our center through a mix of digital and community outreach. Social media platforms (Facebook, Instagram), local parenting groups, and Google My Business listings help families find us online. We also partner with OB/GYN offices, pediatricians, WIC offices, and local churches to spread the word. Word-of-mouth referrals from enrolled families are our strongest asset, and we incentivize referrals with small thank-you gifts.</p>
+    </div>
+    <div class="ref-block">
+      <h3>🌍 Multilingual Families</h3>
+      <p>Our community is beautifully diverse, and we honor that. Our website is available in English, Spanish, and Arabic, with additional translations available on request. All printed materials are produced in at least two languages. We employ staff members who speak community languages, use interpretation services for family conferences, and welcome home languages in the classroom — through songs, books, and documentation panels.</p>
+    </div>
+    <div class="ref-block">
+      <h3>🏳️‍🌈 All Family Structures</h3>
+      <p>We warmly welcome single parents, foster families, grandparent-led households, and LGBTQ+ families. Our enrollment forms use inclusive language (guardian, caregiver), and our classroom materials reflect diverse family structures. We schedule events at varied times to accommodate different work schedules, offer sliding-scale tuition, and never make assumptions about who "the parents" are. Every family structure is celebrated as part of our community mosaic.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2>We'd Love to Meet You</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Little Explorers Early Learning Center</h3>
+      <div class="contact-row">
+        <div class="icon">📍</div>
+        <div class="detail"><strong>Address</strong>428 Maple Grove Avenue<br>Springfield, IL 62701</div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">📞</div>
+        <div class="detail"><strong>Phone</strong>(217) 555-0192</div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">✉️</div>
+        <div class="detail"><strong>Email</strong>hello@littleexplorers.edu</div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">🕐</div>
+        <div class="detail"><strong>Hours</strong>Monday – Friday<br>7:00 AM – 6:00 PM</div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">📋</div>
+        <div class="detail"><strong>Enrollment</strong>Ages 6 weeks – 4 years<br>Sliding scale tuition available</div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Schedule a Tour</h3>
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" placeholder="First and Last Name">
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" placeholder="yourname@email.com">
+      </div>
+      <div class="form-row">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(217) 555-0000">
+      </div>
+      <div class="form-row">
+        <label>Child's Age Group</label>
+        <select>
+          <option>Select age group</option>
+          <option>Infant (0–12 months)</option>
+          <option>Toddler (1–2 years)</option>
+          <option>Preschool (3–4 years)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Message (Optional)</label>
+        <textarea placeholder="Any questions or special considerations?"></textarea>
+      </div>
+      <button class="form-submit">Request a Tour →</button>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="references">
+  <h3>References</h3>
+  <ol>
+    <li>Malaguzzi, L. (1993). History, ideas, and basic philosophy: An interview with Lella Gandini. In C. Edwards, L. Gandini, & G. Forman (Eds.), <em>The hundred languages of children: The Reggio Emilia approach to early childhood education</em> (pp. 41–89). Ablex Publishing.</li>
+    <li>Vygotsky, L. S. (1978). <em>Mind in society: The development of higher psychological processes.</em> Harvard University Press.</li>
+    <li>Edwards, C., Gandini, L., & Forman, G. (Eds.). (2012). <em>The hundred languages of children: The Reggio Emilia experience in transformation</em> (3rd ed.). Praeger.</li>
+  </ol>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Little Explorers Early Learning Center · 428 Maple Grove Ave, Springfield, IL 62701 · (217) 555-0192</p>
+  <p style="margin-top:0.5rem;">Inspired by the Reggio Emilia approach · Welcoming all children and families</p>
+</footer>
+
+<script>
+  function showRoom(room) {
+    document.querySelectorAll('.room-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('room-' + room).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
